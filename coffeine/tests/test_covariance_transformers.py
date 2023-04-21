@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import polars as pl
 import pytest
 from coffeine.covariance_transformers import Riemann
 
@@ -14,6 +15,8 @@ def toy_data(data_frame):
         X_cov[sub] = X_cov[sub] @ X_cov[sub].T
     if data_frame:
         X_cov = pd.DataFrame({'cov': list(X_cov)})
+        X_cov = X_cov["cov"].apply(lambda x: x.tolist())  # Convert nested arrays to list first to satisfy pyarrow
+        X_cov = pl.from_pandas(X_cov)
     return X_cov
 
 

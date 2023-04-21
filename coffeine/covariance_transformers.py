@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import polars as pl
 from pyriemann.tangentspace import TangentSpace
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -9,6 +10,7 @@ def _check_data(X):
     out = None
     if X.ndim == 3:
         out = X
+        print(f"out type: {type(out)}")
     elif X.values.dtype == 'object':
         # first remove unnecessary dimensions,
         # then stack to 3d data
@@ -19,11 +21,12 @@ def _check_data(X):
         if out.ndim == 2:  # deal with single sample
             assert out.shape[0] == out.shape[1]
             out = out[np.newaxis, :, :]
+        print(f"out type: {type(out)}")
     return out
 
 
 class Riemann(BaseEstimator, TransformerMixin):
-    def __init__(self, metric='wasserstein', return_data_frame=True):
+    def __init__(self, metric='riemann', return_data_frame=True):
         self.metric = metric
         self.return_data_frame = return_data_frame
 

@@ -44,8 +44,13 @@ if __name__ == "__main__":
               'pandas>=1.0.0',
               'pyriemann>=0.2.7',
               'scikit-learn>=0.24',
-              'mne[data]>=0.24'
+              'mne[data]>=0.24',
+              'polars>=0.17',
+              'pyarrow',
           ],
+          extras_require={
+                'dev': ['pytest']
+          },
           classifiers=[
               'Intended Audience :: Science/Research',
               'Intended Audience :: Developers',
